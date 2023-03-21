@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{mainTitle}">Currency Converter | Currency Exchange Calculate</title>
+    <meta name="description" content="shala shala" th:attr="content=#{meta.description}"/>
+    <meta name="keywords" content="환율, 환율계산기, 원달러, 달러원, currency, currency exchange, currency converter"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+
+    <style>
+        .container {
+            max-width: 605px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4" th:text="#{title}">환율 계산기</h1>
+
+    <div class="my-4 ">
+        <form action="main.html" method="post" th:action th:object="${formDto}">
+            <div class="my-4 ">
+                <label class="form-label" th:text="#{sourceCurrency}">입력 금액</label>
+                <div class="text-danger" th:errors="*{amount}"></div>
+
+                <div class="input-group mb-3 ">
+                    <input type="text" th:field="*{amount}" class="form-control" th:classappend="${#fields.hasErrors('amount')} ? 'is-invalid'">
+
+
+                    <select class="form-select" th:field="*{sourceCurrency}" aria-label="Default select example" >
+                        <option th:each="currency:${currencies}" th:value="${currency.currencyCode}" th:text="${currency.currencyCode} + | (${currency.CurrencyExplanation})|" >USD(UnitedStates Dollar)</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="my-4 d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="my-4 ">
+                <label class="form-label" th:text="#{targetCurrency}">환전 금액</label>
+                <div class="input-group mb-3 ">
+                    <input type="text" class="form-control" th:value="*{{result}}" aria-label="Text input with dropdown button" disabled>
+
+                    <select class="form-select" th:field="*{targetCurrency}" aria-label="Default select example" >
+                        <option th:each="currency:${currencies}" th:value="${currency.currencyCode}" th:text="${currency.currencyCode} + | (${currency.CurrencyExplanation})|" >USD(UnitedStates Dollar)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="my-4">
+                <button type="submit" class="btn btn-secondary" th:text="#{calButton}">Secondary</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
